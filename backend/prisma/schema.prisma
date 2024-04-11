@@ -28,10 +28,10 @@ model form {
 
 model selectedproduct {
   id        Int          @id @default(autoincrement())
-  productId Int
-  product   fixedproduct @relation(fields: [productId], references: [id])
-  form      form         @relation(fields: [formId], references: [id], onDelete: Cascade)
-  formId    Int
+  productId Int //É o ID do produto fixo ligado a este produto escolhido
+  product   fixedproduct @relation(fields: [productId], references: [id]) // Uma ligação com a tabela fixedproduct, que representa o produto fixo ligado a este produto escolhido.
+  form      form         @relation(fields: [formId], references: [id], onDelete: Cascade) //Uma ligação com a tabela form, que representa o formulário ligado a este produto escolhido.
+  formId    Int //É o ID do formulário ligado a este produto escolhido.
 }
 
 model fixedproduct {

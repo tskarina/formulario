@@ -1,13 +1,14 @@
 import {
   addSelectedProduct,
+  getAllProducts,
   getSelectedProducts,
-  modifySelectedProduct,
-  removeSelectedProduct,
 } from "../services/selectedProductService.js";
 
+// Função para criar um produto selecionado
 const createSelectedProduct = async (req, res) => {
   try {
-    const data = req.body;
+    const data = req.body; // preciso passar o id do formulario e o id do produto
+    // Chama a função do service para adicionar um produto selecionado, passando os dados extraídos da requisição como parâmetro
     const createdProduct = await addSelectedProduct(data);
     res.status(201).json(createdProduct);
   } catch (error) {
@@ -18,8 +19,8 @@ const createSelectedProduct = async (req, res) => {
 
 const getAllSelectedProducts = async (req, res) => {
   try {
-    const { formId } = req.params;
-    const products = await getSelectedProducts(formId); // Passando o parâmetro formId
+    // Chama a função do service para buscar todos os produtos selecionados
+    const products = await getAllProducts();
     res.status(200).json(products);
   } catch (error) {
     console.error("Erro ao buscar produtos selecionados:", error);
@@ -30,6 +31,7 @@ const getAllSelectedProducts = async (req, res) => {
 const getSelectedProductsByFormId = async (req, res) => {
   try {
     const { formId } = req.params;
+    // Chama a função do service para buscar os produtos selecionados por IDs
     const products = await getSelectedProducts(formId);
     res.status(200).json(products);
   } catch (error) {
@@ -38,33 +40,8 @@ const getSelectedProductsByFormId = async (req, res) => {
   }
 };
 
-const updateSelectedProduct = async (req, res) => {
-  try {
-    const { selectedProductId } = req.params;
-    const data = req.body;
-    const updatedProduct = await modifySelectedProduct(selectedProductId, data);
-    res.status(200).json(updatedProduct);
-  } catch (error) {
-    console.error("Erro ao atualizar produto selecionado:", error);
-    res.status(500).json({ error: "Erro ao atualizar produto selecionado" });
-  }
-};
-
-const deleteSelectedProduct = async (req, res) => {
-  try {
-    const { selectedProductId } = req.params;
-    await removeSelectedProduct(selectedProductId);
-    res.status(204).end();
-  } catch (error) {
-    console.error("Erro ao excluir produto selecionado:", error);
-    res.status(500).json({ error: "Erro ao excluir produto selecionado" });
-  }
-};
-
 export {
   createSelectedProduct,
   getAllSelectedProducts,
   getSelectedProductsByFormId,
-  updateSelectedProduct,
-  deleteSelectedProduct,
 };

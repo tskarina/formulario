@@ -1,11 +1,11 @@
-// repository.js
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Função do repositório para criar um produto selecionado no banco de dados
 const createSelectedProduct = async (data) => {
   try {
+    // recebe os dados criar um novo produto selecionado no banco de dados, passando os dados recebidos como parâmetro
     return await prisma.selectedproduct.create({
       data: data,
     });
@@ -15,10 +15,8 @@ const createSelectedProduct = async (data) => {
 };
 
 const getAllSelectedProducts = async () => {
-  // Removendo o parâmetro formId
   try {
     return await prisma.selectedproduct.findMany({
-      // Removendo a cláusula where
       include: {
         product: true,
       },
@@ -43,35 +41,8 @@ const getSelectedProductsByFormId = async (formId) => {
   }
 };
 
-const updateSelectedProduct = async (selectedProductId, data) => {
-  try {
-    return await prisma.selectedproduct.update({
-      where: {
-        id: selectedProductId,
-      },
-      data: data,
-    });
-  } catch (error) {
-    throw new Error("Erro ao atualizar produto selecionado: " + error.message);
-  }
-};
-
-const deleteSelectedProduct = async (selectedProductId) => {
-  try {
-    return await prisma.selectedproduct.delete({
-      where: {
-        id: parseInt(selectedProductId),
-      },
-    });
-  } catch (error) {
-    throw new Error("Erro ao excluir produto selecionado: " + error.message);
-  }
-};
-
 export {
   createSelectedProduct,
   getAllSelectedProducts,
   getSelectedProductsByFormId,
-  updateSelectedProduct,
-  deleteSelectedProduct,
 };

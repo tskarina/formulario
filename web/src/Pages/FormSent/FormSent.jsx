@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Text, Title, Wrapper, Button } from "./styles";
 import airplaneImage from "./../../images/aviao.png";
+
 const FormSent = () => {
   const navigate = useNavigate();
 
